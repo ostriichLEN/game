@@ -236,9 +236,9 @@ int main(){
         for (int i=0;i<3;i++){
             dices[i]=rand() % (6 - 1 + 1) + 1;
         }
-        //dices[0]=1;
-        //dices[1]=1;
-        //dices[2]=1;
+        //dices[0]=2;
+        //dices[1]=2;
+        //dices[2]=5;
         int n;
         n=show();
         system("cls");
@@ -465,11 +465,11 @@ int main(){
                 }
             }
             else if (n<=39){
-                int total;
+                int total=0;
                 for (int i=0;i<3;i++){
                     total+=dices[i];
                 }
-                if (n>=29){
+                if (n<=29){
                 	expected-=0.125*bet;
                     if (n-17==total){
                         money+=bet*6;
