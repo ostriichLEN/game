@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 #include <ctime>
+#include <fstream>
 using namespace std;
 void dices_show(int n);
 void start(void);
@@ -10,6 +11,68 @@ vector <char> odd_even;
 vector <char> big_small;
 vector <int> sum;
 vector <int> combination;
+int wok (void);
+
+int wok(){
+	int k=0;
+	cout <<"你來到洗車店打工，"<<'\n';
+	cout <<"洗車的步驟有三項 : 1.沖水 2.噴泡沫 3.擦乾"<<'\n';
+	cout <<"你的任務就是依序輸入wash、foam、dry"<<'\n';
+	cout <<"每洗完一輛車你將會得到100元的報酬，但請注意如果洗車順序錯誤或是出現錯誤，老闆會扣你的薪水喔"<<'\n';
+	cout <<"此外洗車時你可以輸入b結束打工"<<'\n';
+	system("pause");
+	int car=1;
+	while (true){
+		cout <<"第"<<car<<"台車來了!!"<<'\n';
+		cout <<"目前薪水:"<<k<<"元"<<'\n'; 
+		for (int i=0;i<3;i++){
+			string m;
+			if (i==0){
+				cin>>m;
+				if (m=="b"){
+					return max(k,0);
+				}
+				else if (m=="wash"){
+					cout <<"幹的好!"<<'\n';
+				}
+				else{
+					cout <<"你因為犯錯被老闆扣了200元薪水:("<<'\n';
+					k-=200;
+				}
+			}
+			else if (i==1){
+				cin>>m;
+				if (m=="b"){
+					return max(k,0);
+				}
+				else if (m=="foam"){
+					cout <<"幹的好!"<<'\n';
+				}
+				else{
+					cout <<"你因為犯錯被老闆扣了200元薪水:("<<'\n';
+					k-=200;
+				}
+			}
+			else if (i==2){
+				cin>>m;
+				if (m=="b"){
+					return max(k,0);
+				}
+				else if (m=="dry"){
+					cout <<"幹的好!"<<'\n';
+				}
+				else{
+					cout <<"你因為犯錯被老闆扣了200元薪水:("<<'\n';
+					k-=200;
+				}
+			}
+		}
+		k+=100;
+		system("cls");
+	} 
+}
+
+
 
 void road_map(){
     cout <<"【單/雙】"<<'\n';
@@ -48,23 +111,13 @@ void end(int m,double e){
 	cout <<"-------------------------------"<<'\n';
 	cout <<"|   G  A  M  E    O  V  E  R  |"<<'\n';
 	cout <<"-------------------------------"<<'\n';
-	cout <<'\n'<<"離場共帶走"<<m<<"元"<<'\n';
-	cout <<"一共";
-	if (m>=10000){
-		cout <<"獲利"<<m-10000<<"元"<<'\n';
-	} 
-	else{
-		cout <<"虧損"<<10000-m<<"元"<<'\n';
+	cout <<'\n';
+	if (m==0){
+		cout <<"您輸光了所有積蓄!因此被保鑣(xiao)趕出賭場!"<<'\n';
 	}
 	
-	cout <<"根據期望值，依照您的下注模式您預計收益為:"<<e-10000<<"元"<<'\n';
-	cout <<"與期望值相比，您更";
-	if (m>e){
-		cout <<"幸運"<<(m/e)*100<<"%"<<'\n';		
-	} 
-	else{
-		cout<<"倒楣"<<(e/m)*100<<"%"<<'\n';
-	}
+	cout <<'\n'<<"離場共帶走"<<m<<"元"<<'\n';
+	
 	system("pause");
 }
 
@@ -214,20 +267,35 @@ int  show (){
 }
 
 
-void start(){
-    cout <<"骰寶遊戲"<<'\n';
-    cout <<"請輸入任意鍵開始遊戲"<<'\n';
-    system ("pause");
-}
-
-
 int main(){
-    start();
+    cout <<"骰寶遊戲"<<'\n';
+    cout <<'\n'<<"請輸入1進入賭博模式"<<'\n';
+    cout <<"輸入2則能進入打工模式"<<'\n';
+    ifstream in;
+    in.open("mney.txt");
+    int money;
+    in>>money;
+	int lg;
+	cin>>lg;
+	
+	if (lg==2){
+		int salary=wok();
+		cout <<"打工獲得薪水"<<salary<<"元"<<'\n';
+		money+=salary;
+		system("pause");
+	}
+    
     system("cls"); 
+    
     double expected=10000;
-    int money=10000;
+    
+    
     int bet;
+    
     while (true){
+    	ofstream out;
+    	out.open("mney.txt");
+    	out<<money;
         if (money==0){
             break;
         }
@@ -242,6 +310,7 @@ int main(){
         int n;
         n=show();
         system("cls");
+        
         
         if (n==99){
         	road_map();
